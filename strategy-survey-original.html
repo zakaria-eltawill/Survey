@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>استبيان تقييم الاستراتيجية وصياغة رؤية 2027-2030</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2b6cb0;
+            --bg-color: #f7fafc;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px 10px;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header h2 {
+            color: var(--secondary-color);
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        .intro {
+            background-color: #edf2f7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .question {
+            margin-bottom: 25px;
+        }
+
+        .question-label {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .options-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 16px;
+            background-color: #fdfdfd;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+            margin: 0;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        
+        .swipe-hint {
+            display: none;
+            text-align: center;
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        td:first-child, th:first-child {
+            text-align: right;
+            font-weight: 500;
+            position: sticky;
+            right: 0;
+            background-color: #fff;
+            z-index: 1;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.05);
+        }
+
+        th:first-child {
+            background-color: #f8fafc;
+            z-index: 2;
+        }
+
+        .submit-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 18px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 40px;
+            transition: background 0.3s;
+            font-family: inherit;
+        }
+
+        .submit-btn:hover, .submit-btn:active {
+            background-color: var(--primary-color);
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #718096;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            .header h1 {
+                font-size: 22px;
+            }
+            .header h2 {
+                font-size: 16px;
+            }
+            .section-title {
+                font-size: 18px;
+            }
+            .swipe-hint {
+                display: block;
+            }
+            .options-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            input[type="text"][style*="width: 200px"],
+            input[type="text"][style*="width: 300px"],
+            input[type="text"][style*="width: 150px"],
+            input[type="text"][style*="width: 80px"] {
+                width: 100% !important;
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>تنسيقية الأحزاب والتكتلات السياسية الليبية</h1>
+        <h2>استبيان تقييم الاستراتيجية وصياغة رؤية 2027-2030</h2>
+        <p>استطلاع رأي موجه إلى قيادات وأعضاء أحزاب التنسيقية</p>
+    </div>
+
+    <div class="intro">
+        <p><strong>رسالة إلى أعضاء التنسيقية:</strong></p>
+        <p>السادة الأفاضل، قيادات وأعضاء أحزاب تنسيقية الأحزاب والتكتلات السياسية الليبية، تقف التنسيقية اليوم على عتبة مرحلة جديدة، بعد ثلاث سنوات من العمل في ظل استراتيجية 2024-2026. وإيماناً بأن الاستراتيجية الناجحة تُصنع بالمشاركة لا بالإملاء، نضع بين أيديكم هذا الاستبيان لنكونوا شركاء حقيقيين في تقييم ما مضى ورسم ما هو آت.</p>
+        <p><strong>يهدف الاستبيان إلى ثلاث غايات:</strong></p>
+        <ol>
+            <li><strong>تقييم الأداء:</strong> قياس مدى ما تحقق من الأهداف الاستراتيجية الثلاثة ومشاريعها التسعة، والوقوف على مواطن النجاح ومكامن الإخفاق.</li>
+            <li><strong>استشراف المستقبل:</strong> استطلاع رؤيتكم للأهداف الاستراتيجية للتنسيقية في الفترة 2027-2030.</li>
+            <li><strong>ترجمة الرؤية إلى عمل:</strong> تحديد البرامج والأنشطة التنفيذية التي تنقل التنسيقية إلى موقع القيادة الفاعلة في المشهد السياسي الليبي.</li>
+        </ol>
+        <p><strong>تعليمات التعبئة:</strong> يستغرق الاستبيان قراءة 25 إلى 30 دقيقة. يتكون من ثمانية أقسام؛ يُرجى الإجابة عنها بالترتيب. ضع علامة (✓) في المربع المناسب، ما لم يُطلب منك اختيار أكثر من إجابة. في أسئلة التقييم يُعتمد المقياس: 1 ضعيف جداً، 2 ضعيف، 3 متوسط، 4 جيد، 5 ممتاز. الأسئلة المفتوحة هي قلب هذا الاستبيان؛ نرجو أن تكون إجاباتكم صريحة ومحددة وقابلة للتنفيذ. تُعامل الإجابات بسرية تامة، ولا تُعرض إلا في صورة نتائج مجمّعة.</p>
+        <p><strong>آخر موعد لاستلام الاستبيان:</strong> ........................</p>
+        <p><em>ملاحظة هامة: عند الانتهاء من التعبئة والضغط على زر (حفظ الإجابات وتصديرها)، سيتم تنزيل ملف إكسل تلقائياً يحتوي على الإجابات.</em></p>
+    </div>
+
+    <form id="strategySurvey">
+        
+        <!-- القسم الأول -->
+        <div class="section-title">القسم الأول: بيانات المشارك</div>
+        
+        <div class="question">
+            <label class="question-label">1. اسم الحزب (اختياري):</label>
+            <input type="text" name="q1_party_name">
+        </div>
+
+        <div class="question">
+            <label class="question-label">2. صفتك في التنسيقية:</label>
+            <div class="options-group">
+                <label class="option"><input type="radio" name="q2_role" value="رئيس حزب"> رئيس حزب</label>
+                <label class="option"><input type="radio" name="q2_role" value="ممثل الحزب في التنسيقية"> ممثل الحزب في التنسيقية</label>
+                <label class="option"><input type="radio" name="q2_role" value="عضو في لجنة من لجان التنسيقية"> عضو في لجنة من لجان التنسيقية</label>
+                <label class="option"><input type="radio" name="q2_role" value="عضو قيادي في الحزب"> عضو قيادي في الحزب</label>
+                <label class="option"><input type="radio" name="q2_role" value="أخرى"> أخرى: <input type="text" style="width: 200px; display:inline-block;" name="q2_role_other"></label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">3. مدة ارتباطك بعمل التنسيقية:</label>
+            <div class="options-row">
+                <label class="option"><input type="radio" name="q3_duration" value="أقل من سنة"> أقل من سنة</label>
+                <label class="option"><input type="radio" name="q3_duration" value="سنة إلى سنتين"> سنة إلى سنتين</label>
+                <label class="option"><input type="radio" name="q3_duration" value="سنتان إلى ثلاث"> سنتان إلى ثلاث</label>
+                <label class="option"><input type="radio" name="q3_duration" value="أكثر من ثلاث"> أكثر من ثلاث</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">4. النطاق الجغرافي لنشاط حزبك:</label>
+            <div class="options-row">
+                <label class="option"><input type="radio" name="q4_geography" value="وطني شامل"> وطني شامل</label>
+                <label class="option"><input type="radio" name="q4_geography" value="المنطقة الغربية"> المنطقة الغربية</label>
+                <label class="option"><input type="radio" name="q4_geography" value="المنطقة الشرقية"> المنطقة الشرقية</label>
+                <label class="option"><input type="radio" name="q4_geography" value="المنطقة الجنوبية"> المنطقة الجنوبية</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">5. الفئة العمرية:</label>
+            <div class="options-row">
+                <label class="option"><input type="radio" name="q5_age" value="أقل من 35 سنة"> أقل من 35 سنة</label>
+                <label class="option"><input type="radio" name="q5_age" value="35-50 سنة"> 35-50 سنة</label>
+                <label class="option"><input type="radio" name="q5_age" value="51-65 سنة"> 51-65 سنة</label>
+                <label class="option"><input type="radio" name="q5_age" value="أكثر من 65 سنة"> أكثر من 65 سنة</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">6. الجنس:</label>
+            <div class="options-row">
+                <label class="option"><input type="radio" name="q6_gender" value="ذكر"> ذكر</label>
+                <label class="option"><input type="radio" name="q6_gender" value="أنثى"> أنثى</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">7. مدى انتظامك في حضور اجتماعات التنسيقية خلال العام الأخير:</label>
+            <div class="options-row">
+                <label class="option"><input type="radio" name="q7_attendance" value="دائماً"> دائماً</label>
+                <label class="option"><input type="radio" name="q7_attendance" value="غالباً"> غالباً</label>
+                <label class="option"><input type="radio" name="q7_attendance" value="أحياناً"> أحياناً</label>
+                <label class="option"><input type="radio" name="q7_attendance" value="نادراً"> نادراً</label>
+            </div>
+        </div>
+
+        <!-- القسم الثاني -->
+        <div class="section-title">القسم الثاني: التقييم العام لأداء التنسيقية (2024-2026)</div>
+
+        <div class="question">
+            <label class="question-label">8. ما مدى رضاك العام عن أداء التنسيقية خلال الفترة 2024-2026؟</label>
+            <div class="options-row">
+                <label class="option"><input type="radio" name="q8_satisfaction" value="راضٍ جداً"> راضٍ جداً</label>
+                <label class="option"><input type="radio" name="q8_satisfaction" value="راضٍ"> راضٍ</label>
+                <label class="option"><input type="radio" name="q8_satisfaction" value="محايد"> محايد</label>
+                <label class="option"><input type="radio" name="q8_satisfaction" value="غير راضٍ"> غير راضٍ</label>
+                <label class="option"><input type="radio" name="q8_satisfaction" value="غير راضٍ إطلاقاً"> غير راضٍ إطلاقاً</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">9. قيّم أداء التنسيقية في الجوانب الآتية (1 = ضعيف جداً، 5 = ممتاز):</label>
+            <div class="swipe-hint">← اسحب يميناً ويساراً →</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الجانب</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>وضوح الرؤية والأهداف لدى الأعضاء</td>
+                            <td><input type="radio" name="q9_1_vision" value="1"></td>
+                            <td><input type="radio" name="q9_1_vision" value="2"></td>
+                            <td><input type="radio" name="q9_1_vision" value="3"></td>
+                            <td><input type="radio" name="q9_1_vision" value="4"></td>
+                            <td><input type="radio" name="q9_1_vision" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>جودة القيادة وإدارة الاجتماعات</td>
+                            <td><input type="radio" name="q9_2_leadership" value="1"></td>
+                            <td><input type="radio" name="q9_2_leadership" value="2"></td>
+                            <td><input type="radio" name="q9_2_leadership" value="3"></td>
+                            <td><input type="radio" name="q9_2_leadership" value="4"></td>
+                            <td><input type="radio" name="q9_2_leadership" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>آليات اتخاذ القرار والتوافق</td>
+                            <td><input type="radio" name="q9_3_decision" value="1"></td>
+                            <td><input type="radio" name="q9_3_decision" value="2"></td>
+                            <td><input type="radio" name="q9_3_decision" value="3"></td>
+                            <td><input type="radio" name="q9_3_decision" value="4"></td>
+                            <td><input type="radio" name="q9_3_decision" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>سرعة الاستجابة للمستجدات السياسية</td>
+                            <td><input type="radio" name="q9_4_response" value="1"></td>
+                            <td><input type="radio" name="q9_4_response" value="2"></td>
+                            <td><input type="radio" name="q9_4_response" value="3"></td>
+                            <td><input type="radio" name="q9_4_response" value="4"></td>
+                            <td><input type="radio" name="q9_4_response" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>الحضور الإعلامي والتأثير في الرأي العام</td>
+                            <td><input type="radio" name="q9_5_media" value="1"></td>
+                            <td><input type="radio" name="q9_5_media" value="2"></td>
+                            <td><input type="radio" name="q9_5_media" value="3"></td>
+                            <td><input type="radio" name="q9_5_media" value="4"></td>
+                            <td><input type="radio" name="q9_5_media" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>تحويل القرارات إلى أعمال منجزة</td>
+                            <td><input type="radio" name="q9_6_implementation" value="1"></td>
+                            <td><input type="radio" name="q9_6_implementation" value="2"></td>
+                            <td><input type="radio" name="q9_6_implementation" value="3"></td>
+                            <td><input type="radio" name="q9_6_implementation" value="4"></td>
+                            <td><input type="radio" name="q9_6_implementation" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>الشفافية وتبادل المعلومات بين الأحزاب</td>
+                            <td><input type="radio" name="q9_7_transparency" value="1"></td>
+                            <td><input type="radio" name="q9_7_transparency" value="2"></td>
+                            <td><input type="radio" name="q9_7_transparency" value="3"></td>
+                            <td><input type="radio" name="q9_7_transparency" value="4"></td>
+                            <td><input type="radio" name="q9_7_transparency" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>تمثيل مصالح الأحزاب الأعضاء والدفاع عنها</td>
+                            <td><input type="radio" name="q9_8_representation" value="1"></td>
+                            <td><input type="radio" name="q9_8_representation" value="2"></td>
+                            <td><input type="radio" name="q9_8_representation" value="3"></td>
+                            <td><input type="radio" name="q9_8_representation" value="4"></td>
+                            <td><input type="radio" name="q9_8_representation" value="5"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">10. ما أبرز ثلاثة إنجازات حققتها التنسيقية خلال الفترة الماضية؟</label>
+            <input type="text" name="q10_ach1" placeholder="1. ......" style="margin-bottom: 10px;">
+            <input type="text" name="q10_ach2" placeholder="2. ......" style="margin-bottom: 10px;">
+            <input type="text" name="q10_ach3" placeholder="3. ......">
+        </div>
+
+        <div class="question">
+            <label class="question-label">11. ما أبرز ثلاثة إحفاقات أو أوجه قصور واجهتها التنسيقية؟</label>
+            <input type="text" name="q11_short1" placeholder="1. ......" style="margin-bottom: 10px;">
+            <input type="text" name="q11_short2" placeholder="2. ......" style="margin-bottom: 10px;">
+            <input type="text" name="q11_short3" placeholder="3. ......">
+        </div>
+
+        <div class="question">
+            <label class="question-label">12. ما الأسباب الرئيسية التي حالت دون تحقيق بعض الأهداف؟ (يمكن اختيار أكثر من إجابة)</label>
+            <div class="options-group">
+                <label class="option"><input type="checkbox" name="q12_reasons" value="ضعف الإمكانيات المالية"> ضعف الإمكانيات المالية</label>
+                <label class="option"><input type="checkbox" name="q12_reasons" value="غياب هيكل إداري وتنفيذي متفرغ"> غياب هيكل إداري وتنفيذي متفرغ</label>
+                <label class="option"><input type="checkbox" name="q12_reasons" value="ضعف التزام بعض الأحزاب"> ضعف التزام بعض الأحزاب</label>
+                <label class="option"><input type="checkbox" name="q12_reasons" value="تباين المواقف والرؤى السياسية بين الأحزاب"> تباين المواقف والرؤى السياسية بين الأحزاب</label>
+                <label class="option"><input type="checkbox" name="q12_reasons" value="الظروف السياسية والأمنية العامة وتأجيل الانتخابات"> الظروف السياسية والأمنية العامة وتأجيل الانتخابات</label>
+                <label class="option"><input type="checkbox" name="q12_reasons" value="ضعف التواصل الداخلي"> ضعف التواصل الداخلي</label>
+                <label class="option"><input type="checkbox" name="q12_reasons" value="طموح الأهداف مقارنة بالإمكانيات المتاحة"> طموح الأهداف مقارنة بالإمكانيات المتاحة</label>
+                <label class="option"><input type="checkbox" name="q12_reasons" value="أخرى"> أخرى: <input type="text" style="width: 200px; display:inline-block;" name="q12_reasons_other"></label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">13. لو أتيح للتنسيقية أن تبدأ الفترة الماضية من جديد، ما الأمر الأهم الذي كان ينبغي أن تفعله بصورة مختلفة؟</label>
+            <textarea name="q13_different"></textarea>
+        </div>
+
+        <div class="question">
+            <label class="question-label">14. ما مدى رضاك عن مستوى استفادة حزبك من عضويته في التنسيقية؟</label>
+            <div class="options-row">
+                <label class="option"><input type="radio" name="q14_benefit" value="مرتفع"> مرتفع</label>
+                <label class="option"><input type="radio" name="q14_benefit" value="متوسط"> متوسط</label>
+                <label class="option"><input type="radio" name="q14_benefit" value="منخفض"> منخفض</label>
+                <label class="option"><input type="radio" name="q14_benefit" value="لا استفادة تُذكر"> لا استفادة تُذكر</label>
+            </div>
+        </div>
+
+        <!-- القسم الثالث -->
+        <div class="section-title">القسم الثالث: تقييم الأهداف الاستراتيجية ومشاريعها (2024-2026)</div>
+        <p>يقيس هذا القسم مدى تحقق كل هدف من الأهداف الثلاثة ومشاريعه التنفيذية التسعة. ضع علامة (✓) تحت درجة الإنجاز الأقرب إلى الواقع.</p>
+
+        <p><strong>الهدف الأول:</strong> أن تكون التنسيقية عنصراً فاعلاً ومؤثراً ضمن أقوى ثلاثة تنظيمات حزبية وسياسية في ليبيا بحلول ديسمبر 2026.</p>
+
+        <div class="question">
+            <label class="question-label">15. قيّم درجة إنجاز مشاريع الهدف الأول:</label>
+            <div class="swipe-hint">← اسحب يميناً ويساراً →</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المشروع التنفيذي</th>
+                            <th>لم يتحقق</th>
+                            <th>جزئياً</th>
+                            <th>إلى حد كبير</th>
+                            <th>كلياً</th>
+                            <th>لا أعلم</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>بناء القدرة المؤسسية للتنسيقية</td>
+                            <td><input type="radio" name="q15_1_institutional" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q15_1_institutional" value="جزئياً"></td>
+                            <td><input type="radio" name="q15_1_institutional" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q15_1_institutional" value="كلياً"></td>
+                            <td><input type="radio" name="q15_1_institutional" value="لا أعلم"></td>
+                        </tr>
+                        <tr>
+                            <td>أجندة التواصل المجتمعي</td>
+                            <td><input type="radio" name="q15_2_social" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q15_2_social" value="جزئياً"></td>
+                            <td><input type="radio" name="q15_2_social" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q15_2_social" value="كلياً"></td>
+                            <td><input type="radio" name="q15_2_social" value="لا أعلم"></td>
+                        </tr>
+                        <tr>
+                            <td>أجندة التواصل الدولي</td>
+                            <td><input type="radio" name="q15_3_international" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q15_3_international" value="جزئياً"></td>
+                            <td><input type="radio" name="q15_3_international" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q15_3_international" value="كلياً"></td>
+                            <td><input type="radio" name="q15_3_international" value="لا أعلم"></td>
+                        </tr>
+                        <tr>
+                            <td>زيادة المشاركة الفعّالة في العملية السياسية</td>
+                            <td><input type="radio" name="q15_4_political" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q15_4_political" value="جزئياً"></td>
+                            <td><input type="radio" name="q15_4_political" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q15_4_political" value="كلياً"></td>
+                            <td><input type="radio" name="q15_4_political" value="لا أعلم"></td>
+                        </tr>
+                        <tr>
+                            <td>التوسع في الانتشار الوطني وزيادة العضوية</td>
+                            <td><input type="radio" name="q15_5_expansion" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q15_5_expansion" value="جزئياً"></td>
+                            <td><input type="radio" name="q15_5_expansion" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q15_5_expansion" value="كلياً"></td>
+                            <td><input type="radio" name="q15_5_expansion" value="لا أعلم"></td>
+                        </tr>
+                        <tr>
+                            <td>بناء الشراكات مع منظمات المجتمع المدني</td>
+                            <td><input type="radio" name="q15_6_partnerships" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q15_6_partnerships" value="جزئياً"></td>
+                            <td><input type="radio" name="q15_6_partnerships" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q15_6_partnerships" value="كلياً"></td>
+                            <td><input type="radio" name="q15_6_partnerships" value="لا أعلم"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">16. في تقديرك، أين تقف التنسيقية اليوم بين التنظيمات الحزبية والسياسية في ليبيا؟</label>
+            <div class="options-group">
+                <label class="option"><input type="radio" name="q16_ranking" value="ضمن أقوى ثلاثة تنظيمات"> ضمن أقوى ثلاثة تنظيمات</label>
+                <label class="option"><input type="radio" name="q16_ranking" value="ضمن أقوى خمسة"> ضمن أقوى خمسة</label>
+                <label class="option"><input type="radio" name="q16_ranking" value="ضمن أقوى عشرة"> ضمن أقوى عشرة</label>
+                <label class="option"><input type="radio" name="q16_ranking" value="خارج دائرة التأثير الفعلي"> خارج دائرة التأثير الفعلي</label>
+                <label class="option"><input type="radio" name="q16_ranking" value="يصعب التقدير"> يصعب التقدير</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">17. ما الذي ينقص التنسيقية لتصبح رقماً صعباً لا يمكن تجاوزه في المعادلة السياسية الليبية؟</label>
+            <textarea name="q17_needs"></textarea>
+        </div>
+
+        <p><strong>الهدف الثاني:</strong> حصول أحزاب التنسيقية على 80% على الأقل من حصة المقاعد المخصصة للأحزاب في البرلمان المنتخب القادم.</p>
+
+        <div class="question">
+            <label class="question-label">18. قيّم درجة إنجاز مشاريع الهدف الثاني:</label>
+            <div class="swipe-hint">← اسحب يميناً ويساراً →</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المشروع التنفيذي</th>
+                            <th>لم يتحقق</th>
+                            <th>جزئياً</th>
+                            <th>إلى حد كبير</th>
+                            <th>كلياً</th>
+                            <th>لا أعلم</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>وضع الأجندة الانتخابية الوطنية لأحزاب التنسيقية</td>
+                            <td><input type="radio" name="q18_1_agenda" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q18_1_agenda" value="جزئياً"></td>
+                            <td><input type="radio" name="q18_1_agenda" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q18_1_agenda" value="كلياً"></td>
+                            <td><input type="radio" name="q18_1_agenda" value="لا أعلم"></td>
+                        </tr>
+                        <tr>
+                            <td>التنسيق للدفع بأفضل المترشحين للبرلمان القادم</td>
+                            <td><input type="radio" name="q18_2_candidates" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q18_2_candidates" value="جزئياً"></td>
+                            <td><input type="radio" name="q18_2_candidates" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q18_2_candidates" value="كلياً"></td>
+                            <td><input type="radio" name="q18_2_candidates" value="لا أعلم"></td>
+                        </tr>
+                        <tr>
+                            <td>وضع خطة مشتركة لإدارة الحملات الانتخابية</td>
+                            <td><input type="radio" name="q18_3_campaigns" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q18_3_campaigns" value="جزئياً"></td>
+                            <td><input type="radio" name="q18_3_campaigns" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q18_3_campaigns" value="كلياً"></td>
+                            <td><input type="radio" name="q18_3_campaigns" value="لا أعلم"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">19. إلى أي مدى تعدّ أحزاب التنسيقية جاهزة لخوض الانتخابات البرلمانية إذا أعلن عن موعدها خلال ستة أشهر؟</label>
+            <div class="options-row">
+                <label class="option"><input type="radio" name="q19_readiness" value="جاهزة تماماً"> جاهزة تماماً</label>
+                <label class="option"><input type="radio" name="q19_readiness" value="جاهزة إلى حد ما"> جاهزة إلى حد ما</label>
+                <label class="option"><input type="radio" name="q19_readiness" value="غير جاهزة"> غير جاهزة</label>
+                <label class="option"><input type="radio" name="q19_readiness" value="لا أعلم"> لا أعلم</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">20. هل ما زال هدف 80% واقعياً في ضوء المعطيات الحالية؟</label>
+            <div class="options-group">
+                <label class="option"><input type="radio" name="q20_realistic" value="نعم، يُحتفظ به"> نعم، يُحتفظ به</label>
+                <label class="option"><input type="radio" name="q20_realistic" value="يُعدّل إلى نسبة أخرى"> يُعدّل إلى نسبة أخرى: <input type="text" style="width: 80px; display:inline-block;" name="q20_percent"> %</label>
+                <label class="option"><input type="radio" name="q20_realistic" value="يُستبدل بمؤشر مختلف"> يُستبدل بمؤشر مختلف: <input type="text" style="width: 300px; display:inline-block;" name="q20_indicator"></label>
+            </div>
+        </div>
+
+        <p><strong>الهدف الثالث:</strong> تعزيز دور الأحزاب في الحياة السياسية في ليبيا.</p>
+
+        <div class="question">
+            <label class="question-label">21. قيّم درجة إنجاز مشاريع الهدف الثالث:</label>
+            <div class="swipe-hint">← اسحب يميناً ويساراً →</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المشروع التنفيذي</th>
+                            <th>لم يتحقق</th>
+                            <th>جزئياً</th>
+                            <th>إلى حد كبير</th>
+                            <th>كلياً</th>
+                            <th>لا أعلم</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>إصدار وتطوير القوانين المتعلقة بترسيخ العمل الحزبي</td>
+                            <td><input type="radio" name="q21_1_laws" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q21_1_laws" value="جزئياً"></td>
+                            <td><input type="radio" name="q21_1_laws" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q21_1_laws" value="كلياً"></td>
+                            <td><input type="radio" name="q21_1_laws" value="لا أعلم"></td>
+                        </tr>
+                        <tr>
+                            <td>تعزيز المشاركة الشبابية في الحياة السياسية</td>
+                            <td><input type="radio" name="q21_2_youth" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q21_2_youth" value="جزئياً"></td>
+                            <td><input type="radio" name="q21_2_youth" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q21_2_youth" value="كلياً"></td>
+                            <td><input type="radio" name="q21_2_youth" value="لا أعلم"></td>
+                        </tr>
+                        <tr>
+                            <td>تعزيز المشاركة النسائية في الحياة السياسية</td>
+                            <td><input type="radio" name="q21_3_women" value="لم يتحقق"></td>
+                            <td><input type="radio" name="q21_3_women" value="جزئياً"></td>
+                            <td><input type="radio" name="q21_3_women" value="إلى حد كبير"></td>
+                            <td><input type="radio" name="q21_3_women" value="كلياً"></td>
+                            <td><input type="radio" name="q21_3_women" value="لا أعلم"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">22. ما أبرز العوائق التشريعية أو السياسية التي ما زالت تحدّ من دور الأحزاب في ليبيا؟</label>
+            <textarea name="q22_obstacles"></textarea>
+        </div>
+
+        <p><strong>تقييم الاستراتيجية في مجملها</strong></p>
+        <div class="question">
+            <label class="question-label">23. كيف تقيّم صياغة استراتيجية 2024-2026 ذاتها؟</label>
+            <div class="swipe-hint">← اسحب يميناً ويساراً →</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>العبارة</th>
+                            <th>أوافق بشدة</th>
+                            <th>أوافق</th>
+                            <th>محايد</th>
+                            <th>لا أوافق</th>
+                            <th>لا أوافق بشدة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>كانت الأهداف واضحة ومفهومة لجميع الأعضاء</td>
+                            <td><input type="radio" name="q23_1_clear" value="أوافق بشدة"></td>
+                            <td><input type="radio" name="q23_1_clear" value="أوافق"></td>
+                            <td><input type="radio" name="q23_1_clear" value="محايد"></td>
+                            <td><input type="radio" name="q23_1_clear" value="لا أوافق"></td>
+                            <td><input type="radio" name="q23_1_clear" value="لا أوافق بشدة"></td>
+                        </tr>
+                        <tr>
+                            <td>كانت الأهداف واقعية وقابلة للقياس</td>
+                            <td><input type="radio" name="q23_2_realistic" value="أوافق بشدة"></td>
+                            <td><input type="radio" name="q23_2_realistic" value="أوافق"></td>
+                            <td><input type="radio" name="q23_2_realistic" value="محايد"></td>
+                            <td><input type="radio" name="q23_2_realistic" value="لا أوافق"></td>
+                            <td><input type="radio" name="q23_2_realistic" value="لا أوافق بشدة"></td>
+                        </tr>
+                        <tr>
+                            <td>حُدّدت مسؤوليات تنفيذ كل مشروع بوضوح</td>
+                            <td><input type="radio" name="q23_3_responsibilities" value="أوافق بشدة"></td>
+                            <td><input type="radio" name="q23_3_responsibilities" value="أوافق"></td>
+                            <td><input type="radio" name="q23_3_responsibilities" value="محايد"></td>
+                            <td><input type="radio" name="q23_3_responsibilities" value="لا أوافق"></td>
+                            <td><input type="radio" name="q23_3_responsibilities" value="لا أوافق بشدة"></td>
+                        </tr>
+                        <tr>
+                            <td>جرت متابعة دورية لمستوى التنفيذ</td>
+                            <td><input type="radio" name="q23_4_monitoring" value="أوافق بشدة"></td>
+                            <td><input type="radio" name="q23_4_monitoring" value="أوافق"></td>
+                            <td><input type="radio" name="q23_4_monitoring" value="محايد"></td>
+                            <td><input type="radio" name="q23_4_monitoring" value="لا أوافق"></td>
+                            <td><input type="radio" name="q23_4_monitoring" value="لا أوافق بشدة"></td>
+                        </tr>
+                        <tr>
+                            <td>وُفّرت موارد كافية لتنفيذ المشاريع</td>
+                            <td><input type="radio" name="q23_5_resources" value="أوافق بشدة"></td>
+                            <td><input type="radio" name="q23_5_resources" value="أوافق"></td>
+                            <td><input type="radio" name="q23_5_resources" value="محايد"></td>
+                            <td><input type="radio" name="q23_5_resources" value="لا أوافق"></td>
+                            <td><input type="radio" name="q23_5_resources" value="لا أوافق بشدة"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">24. أي المشاريع التسعة ترى ضرورة استمراره في الاستراتيجية الجديدة، وأيها ينبغي إيقافه أو دمجه؟</label>
+            <p>يستمر:</p>
+            <textarea name="q24_continue" style="margin-bottom: 10px;"></textarea>
+            <p>يُوقف أو يُدمج:</p>
+            <textarea name="q24_stop"></textarea>
+        </div>
+
+        <!-- القسم الرابع -->
+        <div class="section-title">القسم الرابع: البناء المؤسسي والهيكل الإداري</div>
+        <p>لا تقوم استراتيجية طموحة دون مؤسسة قادرة على حملها؛ يقيس هذا القسم جاهزية البنية التنظيمية للتنسيقية.</p>
+
+        <div class="question">
+            <label class="question-label">25. هل ترى أن الهيكل الإداري الحالي للتنسيقية يلبي متطلبات العمل؟</label>
+            <div class="options-group">
+                <label class="option"><input type="radio" name="q25_structure" value="نعم، يلبيها بشكل كامل"> نعم، يلبيها بشكل كامل</label>
+                <label class="option"><input type="radio" name="q25_structure" value="يلبيها جزئياً ويحتاج إلى تطوير محدود"> يلبيها جزئياً ويحتاج إلى تطوير محدود</label>
+                <label class="option"><input type="radio" name="q25_structure" value="لا يلبيها ويحتاج إلى إعادة هيكلة شاملة"> لا يلبيها ويحتاج إلى إعادة هيكلة شاملة</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">26. إن كنت ترى حاجة إلى التطوير أو إعادة الهيكلة، فما الذي تقترحه؟ (يمكن اختيار أكثر من إجابة)</label>
+            <div class="options-group">
+                <label class="option"><input type="checkbox" name="q26_suggestions" value="إنشاء أمانة عامة تنفيذية متفرغة"> إنشاء أمانة عامة تنفيذية متفرغة</label>
+                <label class="option"><input type="checkbox" name="q26_suggestions" value="تفعيل لجان متخصصة دائمة"> تفعيل لجان متخصصة دائمة (سياسية، انتخابية، إعلامية، قانونية، علاقات خارجية، مالية)</label>
+                <label class="option"><input type="checkbox" name="q26_suggestions" value="اعتماد نظام داخلي ولائحة عمل مكتوبة"> اعتماد نظام داخلي ولائحة عمل مكتوبة ومحدّثة</label>
+                <label class="option"><input type="checkbox" name="q26_suggestions" value="اعتماد رئاسة دورية بمدة محددة"> اعتماد رئاسة دورية بمدة محددة</label>
+                <label class="option"><input type="checkbox" name="q26_suggestions" value="إنشاء فروع أو منسقين"> إنشاء فروع أو منسقين في المناطق والمدن</label>
+                <label class="option"><input type="checkbox" name="q26_suggestions" value="إنشاء وحدة للسياسات العامة"> إنشاء وحدة للسياسات العامة</label>
+                <label class="option"><input type="checkbox" name="q26_suggestions" value="تعيين متحدث رسمي"> تعيين متحدث رسمي وإنشاء مكتب إعلامي موحد</label>
+                <label class="option"><input type="checkbox" name="q26_suggestions" value="أخرى"> أخرى: <input type="text" style="width: 200px; display:inline-block;" name="q26_suggestions_other"></label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">27. قيّم الجوانب المؤسسية الآتية (1 = ضعيف جداً، 5 = ممتاز):</label>
+            <div class="swipe-hint">← اسحب يميناً ويساراً →</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الجانب</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>وضوح الأدوار والصلاحيات</td>
+                            <td><input type="radio" name="q27_1_roles" value="1"></td>
+                            <td><input type="radio" name="q27_1_roles" value="2"></td>
+                            <td><input type="radio" name="q27_1_roles" value="3"></td>
+                            <td><input type="radio" name="q27_1_roles" value="4"></td>
+                            <td><input type="radio" name="q27_1_roles" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>فاعلية اللجان القائمة</td>
+                            <td><input type="radio" name="q27_2_committees" value="1"></td>
+                            <td><input type="radio" name="q27_2_committees" value="2"></td>
+                            <td><input type="radio" name="q27_2_committees" value="3"></td>
+                            <td><input type="radio" name="q27_2_committees" value="4"></td>
+                            <td><input type="radio" name="q27_2_committees" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>انتظام الاجتماعات وتوثيق محاضرها</td>
+                            <td><input type="radio" name="q27_3_meetings" value="1"></td>
+                            <td><input type="radio" name="q27_3_meetings" value="2"></td>
+                            <td><input type="radio" name="q27_3_meetings" value="3"></td>
+                            <td><input type="radio" name="q27_3_meetings" value="4"></td>
+                            <td><input type="radio" name="q27_3_meetings" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>متابعة تنفيذ القرارات</td>
+                            <td><input type="radio" name="q27_4_implementation" value="1"></td>
+                            <td><input type="radio" name="q27_4_implementation" value="2"></td>
+                            <td><input type="radio" name="q27_4_implementation" value="3"></td>
+                            <td><input type="radio" name="q27_4_implementation" value="4"></td>
+                            <td><input type="radio" name="q27_4_implementation" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>كفاية الموارد المالية وانتظام الاشتراكات</td>
+                            <td><input type="radio" name="q27_5_finance" value="1"></td>
+                            <td><input type="radio" name="q27_5_finance" value="2"></td>
+                            <td><input type="radio" name="q27_5_finance" value="3"></td>
+                            <td><input type="radio" name="q27_5_finance" value="4"></td>
+                            <td><input type="radio" name="q27_5_finance" value="5"></td>
+                        </tr>
+                        <tr>
+                            <td>قنوات التواصل الداخلي بين الأحزاب</td>
+                            <td><input type="radio" name="q27_6_communication" value="1"></td>
+                            <td><input type="radio" name="q27_6_communication" value="2"></td>
+                            <td><input type="radio" name="q27_6_communication" value="3"></td>
+                            <td><input type="radio" name="q27_6_communication" value="4"></td>
+                            <td><input type="radio" name="q27_6_communication" value="5"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">28. ما الآلية الأنسب لاتخاذ القرارات المصيرية داخل التنسيقية؟</label>
+            <div class="options-group">
+                <label class="option"><input type="radio" name="q28_mechanism" value="الإجماع"> الإجماع</label>
+                <label class="option"><input type="radio" name="q28_mechanism" value="الأغلبية الموصوفة (الثلثان)"> الأغلبية الموصوفة (الثلثان)</label>
+                <label class="option"><input type="radio" name="q28_mechanism" value="الأغلبية البسيطة"> الأغلبية البسيطة</label>
+                <label class="option"><input type="radio" name="q28_mechanism" value="الإجماع في القضايا الكبرى والأغلبية في غيرها"> الإجماع في القضايا الكبرى والأغلبية في غيرها</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">29. ما المصادر التي تقترحها لتمويل أنشطة التنسيقية بصورة مستدامة؟</label>
+            <textarea name="q29_funding"></textarea>
+        </div>
+
+        <div class="question">
+            <label class="question-label">30. ما المهام أو الأدوار التي تتوقع من التنسيقية القيام بها مستقبلاً ولم تقم بها في الماضي؟</label>
+            <textarea name="q30_future_roles"></textarea>
+        </div>
+
+        <!-- القسم الخامس -->
+        <div class="section-title">القسم الخامس: تماسك التنسيقية والتزام أعضائها</div>
+        <p>قوة التكتل من قوة تماسكه: يبحث هذا القسم في سبل صون وحدة التنسيقية ومعالجة ضعف الالتزام.</p>
+
+        <div class="question">
+            <label class="question-label">31. كيف تقيّم درجة تماسك التنسيقية حالياً؟</label>
+            <div class="options-group">
+                <label class="option"><input type="radio" name="q31_cohesion" value="متماسكة جداً"> متماسكة جداً</label>
+                <label class="option"><input type="radio" name="q31_cohesion" value="متوسطة التماسك"> متوسطة التماسك</label>
+                <label class="option"><input type="radio" name="q31_cohesion" value="ضعيفة التماسك"> ضعيفة التماسك</label>
+                <label class="option"><input type="radio" name="q31_cohesion" value="مهددة بالتفكك"> مهددة بالتفكك</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">32. ما أبرز المخاطر التي تهدد تماسك التنسيقية؟ (اختر ثلاثة على الأكثر)</label>
+            <div class="options-group">
+                <label class="option"><input type="checkbox" name="q32_risks" value="تضارب المصالح الانتخابية بين الأحزاب"> تضارب المصالح الانتخابية بين الأحزاب</label>
+                <label class="option"><input type="checkbox" name="q32_risks" value="الاستقطاب السياسي والجهوي"> الاستقطاب السياسي والجهوي</label>
+                <label class="option"><input type="checkbox" name="q32_risks" value="غياب مشروع سياسي جامع وواضح"> غياب مشروع سياسي جامع وواضح</label>
+                <label class="option"><input type="checkbox" name="q32_risks" value="ضعف الالتزام بحضور الاجتماعات والقرارات"> ضعف الالتزام بحضور الاجتماعات والقرارات</label>
+                <label class="option"><input type="checkbox" name="q32_risks" value="انفراد بعض الأحزاب بمواقف علنية مخالفة لمواقف التنسيقية"> انفراد بعض الأحزاب بمواقف علنية مخالفة لمواقف التنسيقية</label>
+                <label class="option"><input type="checkbox" name="q32_risks" value="ضغوط أو استمالات من أطراف خارج التنسيقية"> ضغوط أو استمالات من أطراف خارج التنسيقية</label>
+                <label class="option"><input type="checkbox" name="q32_risks" value="غياب المكاسب الملموسة للأحزاب الأعضاء"> غياب المكاسب الملموسة للأحزاب الأعضاء</label>
+                <label class="option"><input type="checkbox" name="q32_risks" value="أخرى"> أخرى: <input type="text" style="width: 200px; display:inline-block;" name="q32_risks_other"></label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">33. ما الخطوات والآليات الكفيلة بالحفاظ على التنسيقية كتكتل سياسي متماسك ومنع تفككها؟ (يمكن اختيار أكثر من إجابة)</label>
+            <div class="options-group">
+                <label class="option"><input type="checkbox" name="q33_solutions" value="ميثاق شرف سياسي ملزم توقع عليه جميع الأحزاب"> ميثاق شرف سياسي ملزم توقع عليه جميع الأحزاب</label>
+                <label class="option"><input type="checkbox" name="q33_solutions" value="آلية واضحة لفض الخلافات والتحكيم الداخلي"> آلية واضحة لفض الخلافات والتحكيم الداخلي</label>
+                <label class="option"><input type="checkbox" name="q33_solutions" value="مواقف سياسية موحدة تُعلن باسم التنسيقية في القضايا الكبرى"> مواقف سياسية موحدة تُعلن باسم التنسيقية في القضايا الكبرى</label>
+                <label class="option"><input type="checkbox" name="q33_solutions" value="توزيع عادل للأدوار والمسؤوليات والتمثيل"> توزيع عادل للأدوار والمسؤوليات والتمثيل</label>
+                <label class="option"><input type="checkbox" name="q33_solutions" value="مشاريع مشتركة ذات عائد ملموس لكل حزب"> مشاريع مشتركة ذات عائد ملموس لكل حزب</label>
+                <label class="option"><input type="checkbox" name="q33_solutions" value="لقاءات دورية غير رسمية لتعزيز الثقة بين القيادات"> لقاءات دورية غير رسمية لتعزيز الثقة بين القيادات</label>
+                <label class="option"><input type="checkbox" name="q33_solutions" value="أخرى"> أخرى: <input type="text" style="width: 200px; display:inline-block;" name="q33_solutions_other"></label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">34. ما الآلية المناسبة للتعامل مع الأحزاب غير الملتزمة بحضور اجتماعات التنسيقية؟ (اختر المراحل المناسبة ورقمها حسب تسلسلها)</label>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <span>1. تواصل ودي مباشر من رئاسة التنسيقية لمعرفة الأسباب (التسلسل: <input type="number" min="1" max="5" style="width: 60px;" name="q34_order1">)</span>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <span>2. تنبيه كتابي أول (التسلسل: <input type="number" min="1" max="5" style="width: 60px;" name="q34_order2">)</span>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <span>3. إنذار كتابي ثانٍ (التسلسل: <input type="number" min="1" max="5" style="width: 60px;" name="q34_order3">)</span>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <span>4. تعليق حق التصويت مؤقتاً (التسلسل: <input type="number" min="1" max="5" style="width: 60px;" name="q34_order4">)</span>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <span>5. تجميد العضوية / إنهاء العضوية بقرار من الهيئة العامة (التسلسل: <input type="number" min="1" max="5" style="width: 60px;" name="q34_order5">)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">35. ما عدد الغيابات المتتالية دون عذر مقبول التي تستوجب بدء الإجراءات؟</label>
+            <input type="text" name="q35_absences_text" placeholder="اكتب عدد الغيابات هنا...">
+        </div>
+
+        <div class="question">
+            <label class="question-label">36. ما المهلة المناسبة التي تُمنح للحزب غير الملتزم لتصحيح وضعه قبل اتخاذ إجراء نهائي؟</label>
+            <div class="options-row">
+                <label class="option"><input type="radio" name="q36_grace_period" value="شهر واحد"> شهر واحد</label>
+                <label class="option"><input type="radio" name="q36_grace_period" value="شهران"> شهران</label>
+                <label class="option"><input type="radio" name="q36_grace_period" value="ثلاثة أشهر"> ثلاثة أشهر</label>
+                <label class="option"><input type="radio" name="q36_grace_period" value="ستة أشهر"> ستة أشهر</label>
+                <label class="option"><input type="radio" name="q36_grace_period" value="أخرى"> أخرى: <input type="text" style="width: 150px; display:inline-block;" name="q36_grace_period_other"></label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">37. ما شروط قبول أحزاب جديدة في عضوية التنسيقية؟</label>
+            <textarea name="q37_conditions"></textarea>
+        </div>
+
+        <div class="question">
+            <label class="question-label">38. هل ترى ضرورة التمييز بين عضوية كاملة وعضوية مراقبة أو انتساب لبعض الأحزاب؟</label>
+            <div class="options-row">
+                <label class="option"><input type="radio" name="q38_membership" value="نعم"> نعم</label>
+                <label class="option"><input type="radio" name="q38_membership" value="لا"> لا</label>
+                <label class="option"><input type="radio" name="q38_membership" value="لا رأي لي"> لا رأي لي</label>
+            </div>
+        </div>
+
+        <!-- القسم السادس -->
+        <div class="section-title">القسم السادس: استشراف استراتيجية التنسيقية (2027-2030)</div>
+        <p>هنا تنتقل التنسيقية من سؤال «ماذا أنجزنا؟» إلى سؤال «إلى أين نمضي؟». نرجو أن تكون إجاباتك في هذا القسم جريئة ومحددة.</p>
+
+        <div class="question">
+            <label class="question-label">39. ما الدور الذي ينبغي أن تضطلع به التنسيقية في المرحلة القادمة؟ (اختر إجابة واحدة)</label>
+            <div class="options-group">
+                <label class="option"><input type="radio" name="q39_future_role" value="تحالف انتخابي يخوض الانتخابات بقوائم ومرشحين مشتركين"> تحالف انتخابي يخوض الانتخابات بقوائم ومرشحين مشتركين</label>
+                <label class="option"><input type="radio" name="q39_future_role" value="جبهة سياسية تتبنى مواقف موحدة دون اندماج انتخابي"> جبهة سياسية تتبنى مواقف موحدة دون اندماج انتخابي</label>
+                <label class="option"><input type="radio" name="q39_future_role" value="منصة تنسيق وتشاور تحافظ على استقلالية كل حزب"> منصة تنسيق وتشاور تحافظ على استقلالية كل حزب</label>
+                <label class="option"><input type="radio" name="q39_future_role" value="نواة لكيان سياسي موحد أو اندماج حزبي مستقبلي"> نواة لكيان سياسي موحد أو اندماج حزبي مستقبلي</label>
+                <label class="option"><input type="radio" name="q39_future_role" value="أخرى"> أخرى: <input type="text" style="width: 200px; display:inline-block;" name="q39_future_role_other"></label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">40. ما القضايا الرئيسية التي ترى ضرورة تركيز التنسيقية عليها خلال الفترة 2027-2030 (رتب أهم خمس قضايا من 1 إلى 5)</label>
+            <div class="swipe-hint">← اسحب يميناً ويساراً →</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>القضية</th>
+                            <th>الترتيب (1-5)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>إنهاء المرحلة الانتقالية وإجراء الانتخابات العامة</td><td><input type="number" min="1" max="5" name="q40_1_elections"></td></tr>
+                        <tr><td>الإطار الدستوري والقوانين الانتخابية</td><td><input type="number" min="1" max="5" name="q40_2_constitution"></td></tr>
+                        <tr><td>توحيد المؤسسات السيادية والتنفيذية</td><td><input type="number" min="1" max="5" name="q40_3_institutions"></td></tr>
+                        <tr><td>المصالحة الوطنية والسلم الاجتماعي</td><td><input type="number" min="1" max="5" name="q40_4_reconciliation"></td></tr>
+                        <tr><td>السيادة الوطنية ورفض التدخلات الخارجية</td><td><input type="number" min="1" max="5" name="q40_5_sovereignty"></td></tr>
+                        <tr><td>الإصلاح الاقتصادي وعدالة توزيع الثروة</td><td><input type="number" min="1" max="5" name="q40_6_economy"></td></tr>
+                        <tr><td>مكافحة الفساد وترسيخ الشفافية</td><td><input type="number" min="1" max="5" name="q40_7_corruption"></td></tr>
+                        <tr><td>اللامركزية والتنمية المكانية المتوازنة</td><td><input type="number" min="1" max="5" name="q40_8_decentralization"></td></tr>
+                        <tr><td>الأمن وتوحيد المؤسسة العسكرية والأمنية</td><td><input type="number" min="1" max="5" name="q40_9_security"></td></tr>
+                        <tr><td>تمكين الشباب والمرأة سياسياً</td><td><input type="number" min="1" max="5" name="q40_10_youth_women"></td></tr>
+                        <tr><td>قانون الأحزاب وتمويل العمل الحزبي</td><td><input type="number" min="1" max="5" name="q40_11_party_law"></td></tr>
+                        <tr><td>أخرى: <input type="text" name="q40_12_other_text" style="width:100px;"></td><td><input type="number" min="1" max="5" name="q40_12_other_rank"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">41. ضع في جملة واحدة الرؤية التي تقترحها للتنسيقية حتى عام 2030:</label>
+            <textarea name="q41_vision"></textarea>
+        </div>
+
+        <div class="question">
+            <label class="question-label">42. ما الأهداف الاستراتيجية (ثلاثة على الأكثر) التي تقترحها للتنسيقية خلال الفترة 2027-2030؟ اذكر لكل هدف مؤشراً يقيس تحققه.</label>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الهدف الاستراتيجي المقترح</th>
+                            <th>مؤشر قياس النجاح (عدد، نسبة، تاريخ)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1. <input type="text" name="q42_goal1"></td>
+                            <td><input type="text" name="q42_indicator1"></td>
+                        </tr>
+                        <tr>
+                            <td>2. <input type="text" name="q42_goal2"></td>
+                            <td><input type="text" name="q42_indicator2"></td>
+                        </tr>
+                        <tr>
+                            <td>3. <input type="text" name="q42_goal3"></td>
+                            <td><input type="text" name="q42_indicator3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">43. أي الأهداف السابقة ترى استمرارها في الاستراتيجية الجديدة؟</label>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الهدف</th>
+                            <th>يستمر كما هو</th>
+                            <th>يستمر مع تعديل</th>
+                            <th>يُستبدل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>الهدف الأول: موقع ضمن أقوى ثلاثة تنظيمات</td>
+                            <td><input type="radio" name="q43_1_goal1" value="يستمر كما هو"></td>
+                            <td><input type="radio" name="q43_1_goal1" value="يستمر مع تعديل"></td>
+                            <td><input type="radio" name="q43_1_goal1" value="يُستبدل"></td>
+                        </tr>
+                        <tr>
+                            <td>الهدف الثاني: 80% من المقاعد الحزبية</td>
+                            <td><input type="radio" name="q43_2_goal2" value="يستمر كما هو"></td>
+                            <td><input type="radio" name="q43_2_goal2" value="يستمر مع تعديل"></td>
+                            <td><input type="radio" name="q43_2_goal2" value="يُستبدل"></td>
+                        </tr>
+                        <tr>
+                            <td>الهدف الثالث: تعزيز دور الأحزاب</td>
+                            <td><input type="radio" name="q43_3_goal3" value="يستمر كما هو"></td>
+                            <td><input type="radio" name="q43_3_goal3" value="يستمر مع تعديل"></td>
+                            <td><input type="radio" name="q43_3_goal3" value="يُستبدل"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">44. ما الفئات أو الجهات التي ينبغي أن تعطيها التنسيقية أولوية في تواصلها؟ (يمكن اختيار أكثر من إجابة)</label>
+            <div class="options-group">
+                <label class="option"><input type="checkbox" name="q44_priorities" value="الشباب والطلاب"> الشباب والطلاب</label>
+                <label class="option"><input type="checkbox" name="q44_priorities" value="المرأة"> المرأة</label>
+                <label class="option"><input type="checkbox" name="q44_priorities" value="النقابات والاتحادات المهنية"> النقابات والاتحادات المهنية</label>
+                <label class="option"><input type="checkbox" name="q44_priorities" value="منظمات المجتمع المدني"> منظمات المجتمع المدني</label>
+                <label class="option"><input type="checkbox" name="q44_priorities" value="الأعيان والقيادات الاجتماعية"> الأعيان والقيادات الاجتماعية</label>
+                <label class="option"><input type="checkbox" name="q44_priorities" value="المجالس البلدية"> المجالس البلدية</label>
+                <label class="option"><input type="checkbox" name="q44_priorities" value="وسائل الإعلام"> وسائل الإعلام</label>
+                <label class="option"><input type="checkbox" name="q44_priorities" value="البعثة الأممية والمجتمع الدولي"> البعثة الأممية والمجتمع الدولي</label>
+                <label class="option"><input type="checkbox" name="q44_priorities" value="المؤسسات التشريعية والتنفيذية"> المؤسسات التشريعية والتنفيذية</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">45. ما طبيعة العلاقة التي تراها مناسبة بين التنسيقية والسلطات القائمة؟</label>
+            <div class="options-group">
+                <label class="option"><input type="radio" name="q45_relationship" value="معارضة بناءة"> معارضة بناءة</label>
+                <label class="option"><input type="radio" name="q45_relationship" value="شراكة مشروطة"> شراكة مشروطة</label>
+                <label class="option"><input type="radio" name="q45_relationship" value="حياد وضغط من أجل إجراء الانتخابات"> حياد وضغط من أجل إجراء الانتخابات</label>
+                <label class="option"><input type="radio" name="q45_relationship" value="تُحدد بحسب كل ملف"> تُحدد بحسب كل ملف</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">46. ما الفرص التي يتيحها المشهد الليبي الراهن ويمكن للتنسيقية استثمارها؟</label>
+            <textarea name="q46_opportunities"></textarea>
+        </div>
+
+        <div class="question">
+            <label class="question-label">47. ما التهديدات أو التحديات الخارجية التي ينبغي أن تحتاط لها الاستراتيجية الجديدة؟</label>
+            <textarea name="q47_threats"></textarea>
+        </div>
+
+        <!-- القسم السابع -->
+        <div class="section-title">القسم السابع: البرامج والأنشطة التنفيذية لعام 2027</div>
+
+        <div class="question">
+            <label class="question-label">48. حدّد درجة أولوية كل برنامج من البرامج المقترحة لعام 2027:</label>
+            <div class="swipe-hint">← اسحب يميناً ويساراً →</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>البرنامج المقترح</th>
+                            <th>قصوى</th>
+                            <th>متوسطة</th>
+                            <th>منخفضة</th>
+                            <th>لا حاجة إليه</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>مؤتمر وطني سنوي للتنسيقية وإعلان وثيقة سياسية جامعة</td>
+                            <td><input type="radio" name="q48_1_conference" value="قصوى"></td>
+                            <td><input type="radio" name="q48_1_conference" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_1_conference" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_1_conference" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>برنامج تدريبي للكوادر الحزبية والمرشحين المحتملين</td>
+                            <td><input type="radio" name="q48_2_training" value="قصوى"></td>
+                            <td><input type="radio" name="q48_2_training" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_2_training" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_2_training" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>إعداد برنامج انتخابي مشترك لأحزاب التنسيقية</td>
+                            <td><input type="radio" name="q48_3_program" value="قصوى"></td>
+                            <td><input type="radio" name="q48_3_program" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_3_program" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_3_program" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>حملة توعية وطنية بأهمية الانتخابات والعمل الحزبي</td>
+                            <td><input type="radio" name="q48_4_campaign" value="قصوى"></td>
+                            <td><input type="radio" name="q48_4_campaign" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_4_campaign" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_4_campaign" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>جولات ميدانية ولقاءات جماهيرية في المدن والمناطق</td>
+                            <td><input type="radio" name="q48_5_field_visits" value="قصوى"></td>
+                            <td><input type="radio" name="q48_5_field_visits" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_5_field_visits" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_5_field_visits" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>منصة إعلامية رقمية موحدة للتنسيقية</td>
+                            <td><input type="radio" name="q48_6_digital" value="قصوى"></td>
+                            <td><input type="radio" name="q48_6_digital" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_6_digital" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_6_digital" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>أوراق سياسات ومواقف في القضايا الوطنية الكبرى</td>
+                            <td><input type="radio" name="q48_7_policies" value="قصوى"></td>
+                            <td><input type="radio" name="q48_7_policies" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_7_policies" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_7_policies" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>مقترحات تشريعية لقانون الأحزاب وقانون الانتخابات</td>
+                            <td><input type="radio" name="q48_8_legislation" value="قصوى"></td>
+                            <td><input type="radio" name="q48_8_legislation" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_8_legislation" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_8_legislation" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>لقاءات دورية مع البعثة الأممية والسفارات المعتمدة</td>
+                            <td><input type="radio" name="q48_9_diplomacy" value="قصوى"></td>
+                            <td><input type="radio" name="q48_9_diplomacy" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_9_diplomacy" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_9_diplomacy" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>شراكات مع منظمات المجتمع المدني والنقابات</td>
+                            <td><input type="radio" name="q48_10_partnerships" value="قصوى"></td>
+                            <td><input type="radio" name="q48_10_partnerships" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_10_partnerships" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_10_partnerships" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>برنامج قيادات شابة ونسائية</td>
+                            <td><input type="radio" name="q48_11_leadership" value="قصوى"></td>
+                            <td><input type="radio" name="q48_11_leadership" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_11_leadership" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_11_leadership" value="لا حاجة إليه"></td>
+                        </tr>
+                        <tr>
+                            <td>قاعدة بيانات موحدة لعضوية الأحزاب وانتشارها</td>
+                            <td><input type="radio" name="q48_12_database" value="قصوى"></td>
+                            <td><input type="radio" name="q48_12_database" value="متوسطة"></td>
+                            <td><input type="radio" name="q48_12_database" value="منخفضة"></td>
+                            <td><input type="radio" name="q48_12_database" value="لا حاجة إليه"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">49. ما البرامج أو الأنشطة الأخرى التي تقترح على التنسيقية تنفيذها خلال عام 2027؟</label>
+            <div class="swipe-hint">← اسحب يميناً ويساراً →</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>النشاط المقترح</th>
+                            <th>الهدف منه</th>
+                            <th>الجهة المنفذة</th>
+                            <th>التوقيت</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1. <input type="text" name="q49_activity1"></td>
+                            <td><input type="text" name="q49_goal1"></td>
+                            <td><input type="text" name="q49_entity1"></td>
+                            <td><input type="text" name="q49_time1"></td>
+                        </tr>
+                        <tr>
+                            <td>2. <input type="text" name="q49_activity2"></td>
+                            <td><input type="text" name="q49_goal2"></td>
+                            <td><input type="text" name="q49_entity2"></td>
+                            <td><input type="text" name="q49_time2"></td>
+                        </tr>
+                        <tr>
+                            <td>3. <input type="text" name="q49_activity3"></td>
+                            <td><input type="text" name="q49_goal3"></td>
+                            <td><input type="text" name="q49_entity3"></td>
+                            <td><input type="text" name="q49_time3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">50. ما الإسهام الذي يستطيع حزبك تقديمه لتنفيذ برامج التنسيقية؟ (يمكن اختيار أكثر من إجابة)</label>
+            <div class="options-group">
+                <label class="option"><input type="checkbox" name="q50_contributions" value="كوادر بشرية وخبرات متخصصة"> كوادر بشرية وخبرات متخصصة</label>
+                <label class="option"><input type="checkbox" name="q50_contributions" value="مقرات أو قاعات للأنشطة"> مقرات أو قاعات للأنشطة</label>
+                <label class="option"><input type="checkbox" name="q50_contributions" value="مساهمة مالية"> مساهمة مالية</label>
+                <label class="option"><input type="checkbox" name="q50_contributions" value="امتداد جماهيري في مناطق بعينها"> امتداد جماهيري في مناطق بعينها: <input type="text" style="width: 200px; display:inline-block;" name="q50_contributions_regions"></label>
+                <label class="option"><input type="checkbox" name="q50_contributions" value="علاقات إعلامية أو دولية"> علاقات إعلامية أو دولية</label>
+                <label class="option"><input type="checkbox" name="q50_contributions" value="أخرى"> أخرى: <input type="text" style="width: 200px; display:inline-block;" name="q50_contributions_other"></label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">51. ما الآلية الأنسب لمتابعة تنفيذ الخطة وتقييمها؟</label>
+            <div class="options-group">
+                <label class="option"><input type="radio" name="q51_monitoring" value="تقرير ربع سنوي يُعرض على الهيئة العامة"> تقرير ربع سنوي يُعرض على الهيئة العامة</label>
+                <label class="option"><input type="radio" name="q51_monitoring" value="لجنة متابعة وتقييم مستقلة"> لجنة متابعة وتقييم مستقلة</label>
+                <label class="option"><input type="radio" name="q51_monitoring" value="مراجعة نصف سنوية للخطة"> مراجعة نصف سنوية للخطة</label>
+                <label class="option"><input type="radio" name="q51_monitoring" value="أخرى"> أخرى: <input type="text" style="width: 200px; display:inline-block;" name="q51_monitoring_other"></label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label class="question-label">52. هل أنت مستعد للمشاركة شخصياً في لجنة أو فريق عمل لتنفيذ أحد هذه البرامج؟</label>
+            <div class="options-group">
+                <label class="option"><input type="radio" name="q52_participation" value="نعم"> نعم، في مجال: <input type="text" style="width: 300px; display:inline-block;" name="q52_participation_field"></label>
+                <label class="option"><input type="radio" name="q52_participation" value="لا"> لا</label>
+            </div>
+        </div>
+
+        <!-- القسم الثامن -->
+        <div class="section-title">القسم الثامن: كلمة أخيرة</div>
+
+        <div class="question">
+            <label class="question-label">53. لو كنت رئيساً للتنسيقية في عام 2027، ما القرار الأول الذي ستتخذه؟</label>
+            <textarea name="q53_first_decision"></textarea>
+        </div>
+
+        <div class="question">
+            <label class="question-label">54. أي ملاحظات أو مقترحات أخرى تود إضافتها:</label>
+            <textarea name="q54_notes"></textarea>
+        </div>
+
+        <!-- زر الحفظ -->
+        <button type="submit" class="submit-btn" onclick="saveAndExport(event)">حفظ الإجابات وتصديرها إلى Excel</button>
+        
+        <div class="footer-note">
+            <p>شكراً لمشاركتكم. إن آراءكم هي المادة الأولى التي تُبنى عليها استراتيجية التنسيقية للفترة 2027-2030، وستُعرض نتائج هذا الاستبيان مجمّعة على التنسيقية بكامل أعضائها في ورشة عمل مخصصة لصياغة الاستراتيجية الجديدة.</p>
+        </div>
+    </form>
+</div>
+
+<script>
+    // قاموس لترجمة أكواد الحقول إلى نصوص عربية مقروءة في ملف الإكسل
+    const columnLabels = {
+        "q1_party_name": "1. اسم الحزب",
+        "q2_role": "2. الصفة في التنسيقية",
+        "q2_role_other": "2. صفة أخرى",
+        "q3_duration": "3. مدة الارتباط",
+        "q4_geography": "4. النطاق الجغرافي",
+        "q5_age": "5. الفئة العمرية",
+        "q6_gender": "6. الجنس",
+        "q7_attendance": "7. الانتظام في الحضور",
+        "q8_satisfaction": "8. الرضا العام عن الأداء",
+        "q9_1_vision": "9. تقييم: وضوح الرؤية",
+        "q9_2_leadership": "9. تقييم: جودة القيادة",
+        "q9_3_decision": "9. تقييم: آليات اتخاذ القرار",
+        "q9_4_response": "9. تقييم: سرعة الاستجابة",
+        "q9_5_media": "9. تقييم: الحضور الإعلامي",
+        "q9_6_implementation": "9. تقييم: تحويل القرارات",
+        "q9_7_transparency": "9. تقييم: الشفافية وتبادل المعلومات",
+        "q9_8_representation": "9. تقييم: تمثيل مصالح الأحزاب",
+        "q10_ach1": "10. الإنجاز الأول",
+        "q10_ach2": "10. الإنجاز الثاني",
+        "q10_ach3": "10. الإنجاز الثالث",
+        "q11_short1": "11. الإخفاق الأول",
+        "q11_short2": "11. الإخفاق الثاني",
+        "q11_short3": "11. الإخفاق الثالث",
+        "q12_reasons": "12. أسباب عدم تحقيق الأهداف",
+        "q12_reasons_other": "12. أسباب أخرى",
+        "q13_different": "13. ما كان ينبغي فعله بشكل مختلف",
+        "q14_benefit": "14. مدى استفادة الحزب",
+        "q15_1_institutional": "15. الهدف 1: بناء القدرة المؤسسية",
+        "q15_2_social": "15. الهدف 1: التواصل المجتمعي",
+        "q15_3_international": "15. الهدف 1: التواصل الدولي",
+        "q15_4_political": "15. الهدف 1: المشاركة السياسية",
+        "q15_5_expansion": "15. الهدف 1: التوسع والانتشار",
+        "q15_6_partnerships": "15. الهدف 1: بناء الشراكات",
+        "q16_ranking": "16. ترتيب التنسيقية بين التنظيمات",
+        "q17_needs": "17. ما ينقص التنسيقية",
+        "q18_1_agenda": "18. الهدف 2: الأجندة الانتخابية",
+        "q18_2_candidates": "18. الهدف 2: الدفع بالمترشحين",
+        "q18_3_campaigns": "18. الهدف 2: خطة إدارة الحملات",
+        "q19_readiness": "19. جاهزية الأحزاب للانتخابات",
+        "q20_realistic": "20. واقعية هدف الـ 80%",
+        "q20_percent": "20. النسبة البديلة",
+        "q20_indicator": "20. المؤشر البديل",
+        "q21_1_laws": "21. الهدف 3: تطوير القوانين",
+        "q21_2_youth": "21. الهدف 3: المشاركة الشبابية",
+        "q21_3_women": "21. الهدف 3: المشاركة النسائية",
+        "q22_obstacles": "22. العوائق التشريعية",
+        "q23_1_clear": "23. وضوح الأهداف",
+        "q23_2_realistic": "23. واقعية الأهداف",
+        "q23_3_responsibilities": "23. وضوح المسؤوليات",
+        "q23_4_monitoring": "23. المتابعة الدورية",
+        "q23_5_resources": "23. كفاية الموارد",
+        "q24_continue": "24. مشاريع تستمر",
+        "q24_stop": "24. مشاريع توقف أو تدمج",
+        "q25_structure": "25. تقييم الهيكل الإداري",
+        "q26_suggestions": "26. مقترحات التطوير",
+        "q26_suggestions_other": "26. مقترحات أخرى",
+        "q27_1_roles": "27. تقييم: وضوح الأدوار",
+        "q27_2_committees": "27. تقييم: فاعلية اللجان",
+        "q27_3_meetings": "27. تقييم: انتظام الاجتماعات",
+        "q27_4_implementation": "27. تقييم: متابعة القرارات",
+        "q27_5_finance": "27. تقييم: الموارد المالية",
+        "q27_6_communication": "27. تقييم: قنوات التواصل",
+        "q28_mechanism": "28. آلية اتخاذ القرار",
+        "q29_funding": "29. مصادر التمويل",
+        "q30_future_roles": "30. أدوار مستقبلية",
+        "q31_cohesion": "31. درجة التماسك",
+        "q32_risks": "32. مخاطر التماسك",
+        "q32_risks_other": "32. مخاطر أخرى",
+        "q33_solutions": "33. آليات الحفاظ على التماسك",
+        "q33_solutions_other": "33. آليات أخرى",
+        "q34_order1": "34. تسلسل: تواصل ودي",
+        "q34_order2": "34. تسلسل: تنبيه كتابي أول",
+        "q34_order3": "34. تسلسل: إنذار كتابي ثان",
+        "q34_order4": "34. تسلسل: تعليق التصويت",
+        "q34_order5": "34. تسلسل: تجميد العضوية",
+        "q35_absences_text": "35. عدد الغيابات",
+        "q36_grace_period": "36. المهلة الممنوحة",
+        "q36_grace_period_other": "36. مهلة أخرى",
+        "q37_conditions": "37. شروط قبول أحزاب جديدة",
+        "q38_membership": "38. التمييز بين العضويات",
+        "q39_future_role": "39. دور التنسيقية المستقبلي",
+        "q39_future_role_other": "39. دور آخر",
+        "q40_1_elections": "40. ترتيب: إنهاء المرحلة الانتقالية",
+        "q40_2_constitution": "40. ترتيب: الإطار الدستوري",
+        "q40_3_institutions": "40. ترتيب: توحيد المؤسسات",
+        "q40_4_reconciliation": "40. ترتيب: المصالحة الوطنية",
+        "q40_5_sovereignty": "40. ترتيب: السيادة الوطنية",
+        "q40_6_economy": "40. ترتيب: الإصلاح الاقتصادي",
+        "q40_7_corruption": "40. ترتيب: مكافحة الفساد",
+        "q40_8_decentralization": "40. ترتيب: اللامركزية",
+        "q40_9_security": "40. ترتيب: الأمن وتوحيد المؤسسة",
+        "q40_10_youth_women": "40. ترتيب: تمكين الشباب والمرأة",
+        "q40_11_party_law": "40. ترتيب: قانون الأحزاب",
+        "q40_12_other_text": "40. قضية أخرى",
+        "q40_12_other_rank": "40. ترتيب: قضية أخرى",
+        "q41_vision": "41. الرؤية حتى 2030",
+        "q42_goal1": "42. الهدف الاستراتيجي 1",
+        "q42_indicator1": "42. مؤشر الهدف 1",
+        "q42_goal2": "42. الهدف الاستراتيجي 2",
+        "q42_indicator2": "42. مؤشر الهدف 2",
+        "q42_goal3": "42. الهدف الاستراتيجي 3",
+        "q42_indicator3": "42. مؤشر الهدف 3",
+        "q43_1_goal1": "43. مصير الهدف الأول",
+        "q43_2_goal2": "43. مصير الهدف الثاني",
+        "q43_3_goal3": "43. مصير الهدف الثالث",
+        "q44_priorities": "44. أولويات التواصل",
+        "q45_relationship": "45. العلاقة مع السلطات",
+        "q46_opportunities": "46. الفرص المتاحة",
+        "q47_threats": "47. التهديدات والتحديات",
+        "q48_1_conference": "48. أولوية: مؤتمر وطني",
+        "q48_2_training": "48. أولوية: برنامج تدريبي",
+        "q48_3_program": "48. أولوية: برنامج انتخابي",
+        "q48_4_campaign": "48. أولوية: حملة توعية",
+        "q48_5_field_visits": "48. أولوية: جولات ميدانية",
+        "q48_6_digital": "48. أولوية: منصة إعلامية",
+        "q48_7_policies": "48. أولوية: أوراق سياسات",
+        "q48_8_legislation": "48. أولوية: مقترحات تشريعية",
+        "q48_9_diplomacy": "48. أولوية: لقاءات دبلوماسية",
+        "q48_10_partnerships": "48. أولوية: شراكات",
+        "q48_11_leadership": "48. أولوية: قيادات شابة",
+        "q48_12_database": "48. أولوية: قاعدة بيانات",
+        "q49_activity1": "49. نشاط مقترح 1",
+        "q49_goal1": "49. هدف النشاط 1",
+        "q49_entity1": "49. جهة تنفيذ النشاط 1",
+        "q49_time1": "49. توقيت النشاط 1",
+        "q49_activity2": "49. نشاط مقترح 2",
+        "q49_goal2": "49. هدف النشاط 2",
+        "q49_entity2": "49. جهة تنفيذ النشاط 2",
+        "q49_time2": "49. توقيت النشاط 2",
+        "q49_activity3": "49. نشاط مقترح 3",
+        "q49_goal3": "49. هدف النشاط 3",
+        "q49_entity3": "49. جهة تنفيذ النشاط 3",
+        "q49_time3": "49. توقيت النشاط 3",
+        "q50_contributions": "50. إسهامات الحزب",
+        "q50_contributions_regions": "50. امتداد جماهيري",
+        "q50_contributions_other": "50. إسهامات أخرى",
+        "q51_monitoring": "51. آلية المتابعة والتقييم",
+        "q51_monitoring_other": "51. آلية أخرى",
+        "q52_participation": "52. الاستعداد للمشاركة",
+        "q52_participation_field": "52. مجال المشاركة",
+        "q53_first_decision": "53. القرار الأول",
+        "q54_notes": "54. ملاحظات إضافية",
+        "تاريخ التعبئة": "تاريخ ووقت التعبئة"
+    };
+
+    function saveAndExport(event) {
+        event.preventDefault();
+
+        const form = document.getElementById('strategySurvey');
+        const formData = new FormData(form);
+        const responseData = {};
+
+        for (let [key, value] of formData.entries()) {
+            if (responseData[key]) {
+                if (Array.isArray(responseData[key])) {
+                    responseData[key].push(value);
+                } else {
+                    responseData[key] = [responseData[key], value];
+                }
+            } else {
+                responseData[key] = value;
+            }
+        }
+
+        for (let key in responseData) {
+            if (Array.isArray(responseData[key])) {
+                responseData[key] = responseData[key].join(' | ');
+            }
+        }
+
+        responseData['تاريخ التعبئة'] = new Date().toLocaleString('ar-LY');
+
+        let allResponses = JSON.parse(localStorage.getItem('surveyResponses')) || [];
+        allResponses.push(responseData);
+        localStorage.setItem('surveyResponses', JSON.stringify(allResponses));
+
+        const translatedData = allResponses.map(response => {
+            const translatedObj = {};
+            for (let key in response) {
+                const arabicLabel = columnLabels[key] || key;
+                translatedObj[arabicLabel] = response[key];
+            }
+            return translatedObj;
+        });
+
+        const worksheet = XLSX.utils.json_to_sheet(translatedData);
+        worksheet['!dir'] = 'rtl';
+
+        const colWidths = [];
+        const keys = Object.keys(translatedData[0]);
+        keys.forEach(() => {
+            colWidths.push({ wch: 25 });
+        });
+        worksheet['!cols'] = colWidths;
+
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "بيانات الاستبيان");
+
+        const dateStr = new Date().toISOString().slice(0, 10);
+        XLSX.writeFile(workbook, `نتائج_الاستبيان_محدث_${dateStr}.xlsx`);
+
+        alert('تم حفظ الإجابات بنجاح، وتم تصدير ملف الإكسل تلقائياً إلى مجلد التنزيلات!');
+        form.reset();
+        window.scrollTo(0, 0);
+    }
+</script>
+
+</body>
+</html>
