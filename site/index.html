@@ -185,6 +185,7 @@
         .order-list { display: flex; flex-direction: column; gap: 8px; }
         .order-item { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); }
         .order-item span { flex: 1 1 260px; }
+        .order-field { display: flex; align-items: center; gap: 8px; font-weight: 500; white-space: nowrap; margin-inline-start: auto; }
 
         .question { position: relative; }
         .clear-btn {
@@ -296,6 +297,51 @@
             .inline-input, .inline-input.w-sm, .inline-input.w-md, .inline-input.w-lg { width: 100% !important; margin: 6px 0 0; }
             .option:has(.inline-input) { flex-wrap: wrap; }
             .brand-text { font-size: 13px; }
+        }
+
+        /* ===== الجوال: كل صف جدول يصبح بطاقة، وتظهر كل الخيارات بدون سحب أفقي ===== */
+        td[data-label] { cursor: pointer; }
+        td.cell-field { cursor: default; }
+        @media (max-width: 768px) {
+            .swipe-hint { display: none; }
+            .table-responsive { overflow: visible; border: none; margin-bottom: 4px; }
+            table, tbody, tr { display: block; width: 100%; min-width: 0; }
+            thead { display: none; }
+            tbody tr:nth-child(n), tbody tr:nth-child(n):hover {
+                background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+                padding: 12px 12px 8px; margin-bottom: 12px;
+            }
+            tbody tr:nth-child(n) td, tbody tr:nth-child(n):hover td {
+                display: block; width: 100%; border: none; padding: 0; background: transparent; box-shadow: none;
+            }
+            tbody tr:nth-child(n) td:first-child {
+                position: static; min-width: 0; font-weight: 700; text-align: right; padding: 0 2px 10px; line-height: 1.7; background: transparent;
+            }
+            tbody tr:nth-child(n) td[data-label] {
+                display: flex; align-items: center; gap: 12px; text-align: right;
+                min-height: 48px; padding: 8px 12px; margin-bottom: 6px;
+                border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface);
+            }
+            td[data-label]::before { content: attr(data-label); order: 2; flex: 1; font-weight: 500; font-size: 15.5px; }
+            td[data-label] > input { order: 1; flex: none; }
+            tbody tr:nth-child(n) td[data-label]:has(input:checked) { background: #eaf0f8; border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+            td[data-label]:has(input:focus-visible) { outline: 3px solid var(--accent); outline-offset: 2px; }
+            /* خلايا الكتابة (نص أو رقم): العنوان فوق الحقل وعرضه كامل */
+            tbody tr:nth-child(n) td.cell-field {
+                display: block; padding: 4px 2px 10px; margin: 0; border: none; background: transparent; font-weight: 400;
+            }
+            /* مقياس 1-5 وما شابهه: خمسة أزرار في سطر واحد */
+            tbody tr.tr-scale:nth-child(n) { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+            tbody tr.tr-scale:nth-child(n) td:first-child { grid-column: 1 / -1; }
+            tbody tr.tr-scale:nth-child(n) td[data-label] { min-width: 0; width: auto;
+                flex-direction: column; justify-content: center; gap: 6px; padding: 10px 4px; margin: 0; text-align: center;
+            }
+            tr.tr-scale td[data-label]::before { order: 1; flex: none; font-size: 16px; font-weight: 700; }
+            tr.tr-scale td[data-label] > input { order: 2; }
+            td.cell-field::before { display: block; flex: none; margin-bottom: 6px; font-size: 14px; color: var(--muted); font-weight: 500; }
+            td.cell-field > input { width: 100%; text-align: right; min-width: 0; }
+            td.cell-field > input[type="number"] { text-align: center; }
+            tr > td:first-child > input[type="text"] { width: 100%; margin-top: 6px; min-width: 0; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1000,19 +1046,19 @@
             <label class="question-label">34. ما الآلية المناسبة للتعامل مع الأحزاب غير الملتزمة بحضور اجتماعات التنسيقية؟ (اختر المراحل المناسبة ورقمها حسب تسلسلها)</label>
             <div class="order-list">
                 <div class="order-item">
-                    <span>1. تواصل ودي مباشر من رئاسة التنسيقية لمعرفة الأسباب (التسلسل: <input type="number" min="1" max="5" class="order-input" name="q34_order1">)</span>
+                    <span>1. تواصل ودي مباشر من رئاسة التنسيقية لمعرفة الأسباب</span><label class="order-field">التسلسل: <input type="number" min="1" max="5" class="order-input" name="q34_order1"></label>
                 </div>
                 <div class="order-item">
-                    <span>2. تنبيه كتابي أول (التسلسل: <input type="number" min="1" max="5" class="order-input" name="q34_order2">)</span>
+                    <span>2. تنبيه كتابي أول</span><label class="order-field">التسلسل: <input type="number" min="1" max="5" class="order-input" name="q34_order2"></label>
                 </div>
                 <div class="order-item">
-                    <span>3. إنذار كتابي ثانٍ (التسلسل: <input type="number" min="1" max="5" class="order-input" name="q34_order3">)</span>
+                    <span>3. إنذار كتابي ثانٍ</span><label class="order-field">التسلسل: <input type="number" min="1" max="5" class="order-input" name="q34_order3"></label>
                 </div>
                 <div class="order-item">
-                    <span>4. تعليق حق التصويت مؤقتاً (التسلسل: <input type="number" min="1" max="5" class="order-input" name="q34_order4">)</span>
+                    <span>4. تعليق حق التصويت مؤقتاً</span><label class="order-field">التسلسل: <input type="number" min="1" max="5" class="order-input" name="q34_order4"></label>
                 </div>
                 <div class="order-item">
-                    <span>5. تجميد العضوية / إنهاء العضوية بقرار من الهيئة العامة (التسلسل: <input type="number" min="1" max="5" class="order-input" name="q34_order5">)</span>
+                    <span>5. تجميد العضوية / إنهاء العضوية بقرار من الهيئة العامة</span><label class="order-field">التسلسل: <input type="number" min="1" max="5" class="order-input" name="q34_order5"></label>
                 </div>
             </div>
         </div>
@@ -1906,6 +1952,34 @@
     flushPending();
     updateProgress();
 
+    document.querySelectorAll('table').forEach((t) => {
+        const hs = Array.from(t.querySelectorAll('thead th')).map((th) => th.textContent.trim());
+        t.querySelectorAll('tbody tr').forEach((tr) => {
+            const labs = Array.from(tr.children).slice(1).map((_, j) => hs[j + 1] || '');
+            if (labs.length >= 3 && labs.every((x) => x.length <= 2)) tr.classList.add('tr-scale');
+            Array.from(tr.children).forEach((td, i) => {
+                if (i === 0) {
+                    // أول عمود فيه حقل كتابة مسبوق برقم (مثل "1. ....") يأخذ عنواناً واضحاً على الجوال
+                    const first = td.firstChild;
+                    const inp0 = td.querySelector('input[type="text"]');
+                    if (inp0 && first && first.nodeType === 3 && /^\s*\d+\.\s*$/.test(first.textContent)) {
+                        td.setAttribute('data-label', (hs[0] || '') + ' ' + first.textContent.trim());
+                        td.classList.add('cell-field');
+                        td.removeChild(first);
+                    }
+                    return;
+                }
+                const inp = td.querySelector('input');
+                if (!inp) return;
+                td.setAttribute('data-label', hs[i] || '');
+                if (inp.type === 'radio') {
+                    td.addEventListener('click', (ev) => { if (ev.target !== inp) inp.click(); });
+                } else {
+                    td.classList.add('cell-field');
+                }
+            });
+        });
+    });
     document.querySelectorAll('table').forEach((t) => {
         const heads = Array.from(t.querySelectorAll('thead th')).map((th) => th.textContent.trim());
         t.querySelectorAll('tbody tr').forEach((tr) => {
